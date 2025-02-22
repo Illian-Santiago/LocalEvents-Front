@@ -20,6 +20,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: "
             cd /var/www/html/LocalEvents-Front;
+            git stash
             git pull origin development;
             npm install;
             npm run build;
