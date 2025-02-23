@@ -3,7 +3,7 @@ name: Despliegue del front-end
 on:
   push:
     branches:
-      - development
+      - Illian
   workflow_dispatch:
 
 jobs:
@@ -16,11 +16,11 @@ jobs:
         with:
           host: rafael.informaticamajada.es
           port: 2222
-          username: illian
+          username: razuk
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: "
             cd /var/www/html/LocalEvents-Front;
-            git pull;
+            git pull origin development;
             npm install;
             npm run build;
           "
