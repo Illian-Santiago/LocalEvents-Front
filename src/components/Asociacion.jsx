@@ -1,11 +1,9 @@
 import { NavLink, UNSAFE_decodeViaTurboStream } from "react-router-dom";
-import LlamadaApi from "../providers/LlamadaApi";
+
 
 export function Asociacion({ id, name, description, image, email, phone_number, level }) {
 
-    LlamadaApi('associations');
 
-    console.log(localStorage.getItem('associationsData'));
 
     return (
         <>
