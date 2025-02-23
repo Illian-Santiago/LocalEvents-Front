@@ -1,13 +1,19 @@
 import "../css/Asociaciones.css";
 import { Asociacion } from "../components/Asociacion";
 import VentanaDerecha from "../components/VentanaDerecha";
-import { asociaciones } from "../data/Asociacion";
+import useLlamadaApi from "../providers/useLlamadaApi";
 
 export function Asociaciones() {
+    const { datosApi, loading } = useLlamadaApi('associations');
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="_asociaciones_main_container">
             <div className="_asociaciones_list">
-                {asociaciones.map((asociacion) => (
+                {datosApi.data.map((asociacion) => (
                     <Asociacion 
                         key={asociacion.id} 
                         id={asociacion.id}
