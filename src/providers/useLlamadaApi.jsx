@@ -2,8 +2,9 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
 export default function useLlamadaApi(datoBuscar) {
-    const [datosApi, setDatosApi] = useState([]);
+    const [datosApi, setDatosApi] = useState(null); // Inicializar como null
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); // Nuevo estado para errores
 
     const obtenerDatos = useCallback(async () => {
         const nombreItem = `${datoBuscar}Data`;
@@ -18,8 +19,10 @@ export default function useLlamadaApi(datoBuscar) {
                 localStorage.setItem(nombreItem, JSON.stringify(llamadaApi.data));
                 setDatosApi(llamadaApi.data);
                 setLoading(false);
+                setError(null); // Limpiar errores si la llamada es exitosa
             } catch (error) {
-                console.log('Fallo al llamar los datos:', error);
+                console.error('Fallo al llamar los datos:', error);
+                setError(error); // Guardar el error
                 setLoading(false);
             }
         }
@@ -29,5 +32,5 @@ export default function useLlamadaApi(datoBuscar) {
         obtenerDatos();
     }, [obtenerDatos]);
 
-    return { datosApi, loading };
+    return { datosApi, loading, error }; // Devolver error
 }

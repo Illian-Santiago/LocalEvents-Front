@@ -9,11 +9,11 @@ export function Asociacion({ id, name, description, image, email, phone_number, 
         <>
             <div className="_asociacion_card">
                 <NavLink to={`/AsociacionInfo/${id}`} className="_asociacion_header">
-                    <img src={image} alt={name} className="_asociacion_img" />
+                    <img src={`http://localhost:8000/${image}`} alt={name} className="_asociacion_img" />
                     <span className="_asociacion_name">{name}</span>
                 </NavLink>
 
-                <img src={image} alt={name} className="_asociacion_img_banner" />
+                <img src={`http://localhost:8000/${image}`} alt={name} className="_asociacion_img_banner" />
 
                 <div className="_asociacion_info">
                     <p className="_asociacion_description">{description}</p>
