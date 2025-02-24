@@ -37,6 +37,8 @@
     cursor: pointer;
     padding: 10px;
     border-radius: 8px;
+    text-decoration: none;
+    color: inherit; 
     transition: background-color 0.2s;
 }
 
@@ -63,7 +65,11 @@
 ._asociacion_name {
     font-weight: bold;
     font-size: 1.1rem;
+    text-align: center;
+    width: 100%;
+    display: block;
 }
+
 
 /* Información de la asociación */
 ._asociacion_info {

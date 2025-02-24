@@ -9,7 +9,6 @@ export function Asociacion({ id, name, description, image, email, phone_number, 
         <>
             <div className="_asociacion_card">
                 <NavLink to={`/AsociacionInfo/${id}`} className="_asociacion_header">
-                    <img src={`http://localhost:8000/${image}`} alt={name} className="_asociacion_img" />
                     <span className="_asociacion_name">{name}</span>
                 </NavLink>
 
