@@ -9,11 +9,11 @@ export function Evento({ nombre, bio, imagen, estado, tipo, id }) {
             <div className="evento">
                 <NavLink to={`/EventoInfo/${id}`}>
                     <div className="evento-header">
-                        <img src={`http://localhost:8000/${imagen}`} alt="Asociación" className="asociacion-img" />
+                        <img src={`https://yeray.informaticamajada.es/api/${imagen}`} alt="Asociación" className="asociacion-img" />
                         <span className="asociacion-nombre">{nombre}</span>
                     </div>
                 </NavLink>
-                <img src={`http://localhost:8000/${imagen}`} alt="Evento" className="evento-img" />
+                <img src={`https://yeray.informaticamajada.es/api/${imagen}`} alt="Evento" className="evento-img" />
 
                 <div className="evento-info">
                     <span className={`evento-estado ${estado.toLowerCase()}`}>{estado}</span>

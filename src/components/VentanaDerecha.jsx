@@ -50,7 +50,7 @@ export function VentanaDerecha() {
                             <>
                                 <div className="post-header">
                                     <img 
-                                        src={`http://localhost:8000/${item.association?.image}`} 
+                                        src={`https://yeray.informaticamajada.es/api/${item.association?.image}`} 
                                         alt="Asociación" 
                                         className="post-asociacion-img" 
                                     />
@@ -58,7 +58,7 @@ export function VentanaDerecha() {
                                 </div>
                                 <p className="post-contenido">{item.text}</p>
                                 {item.image && (
-                                    <img src={`http://localhost:8000/${item.image}`} alt="Post" className="post-img" />
+                                    <img src={`https://yeray.informaticamajada.es/api/${item.image}`} alt="Post" className="post-img" />
                                 )}
                             </>
                         )}
@@ -67,7 +67,7 @@ export function VentanaDerecha() {
                             <>
                                 <div className="post-header">
                                     <img 
-                                        src={`http://localhost:8000/${item.association?.image}`} 
+                                        src={`https://yeray.informaticamajada.es/api/${item.association?.image}`} 
                                         alt="Asociación" 
                                         className="post-asociacion-img" 
                                     />
@@ -75,7 +75,7 @@ export function VentanaDerecha() {
                                 </div>
                                 <p className="post-contenido">{item.description}</p>
                                 {item.image && (
-                                    <img src={`http://localhost:8000/${item.image}`} alt="Evento" className="post-img" />
+                                    <img src={`https://yeray.informaticamajada.es/api/${item.image}`} alt="Evento" className="post-img" />
                                 )}
                             </>
                         )}
@@ -84,7 +84,7 @@ export function VentanaDerecha() {
                             <>
                                 <div className="post-header">
                                     <img 
-                                        src={`http://localhost:8000/${item.image}`} 
+                                        src={`https://yeray.informaticamajada.es/api/${item.image}`} 
                                         alt="Asociación" 
                                         className="post-asociacion-img" 
                                     />

@@ -15,7 +15,8 @@ export default function useLlamadaApi(datoBuscar) {
             setLoading(false);
         } else {
             try {
-                const llamadaApi = await axios.get(`http://localhost:8000/${datoBuscar}`);
+                // No borrar el withCredentials porfavor es necesario para el CORS, si no se pone no se podrá hacer la llamada.
+                const llamadaApi = await axios.get(`https://yeray.informaticamajada.es/api/${datoBuscar}`,{withCredentials: true});
                 localStorage.setItem(nombreItem, JSON.stringify(llamadaApi.data));
                 setDatosApi(llamadaApi.data);
                 setLoading(false);

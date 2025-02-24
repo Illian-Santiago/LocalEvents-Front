@@ -15,7 +15,7 @@ export function Eventos() {
             <div className="eventos-container">
                 {datosApi.data.map((evento) => {
                     console.log("Evento imagen:", evento.image);
-                    console.log("URL completa:", `http://localhost:8000/${evento.image}`);
+                    console.log("URL completa:", `https://yeray.informaticamajada.es/api/${evento.image}`);
 
                     return (
                         <Evento 
