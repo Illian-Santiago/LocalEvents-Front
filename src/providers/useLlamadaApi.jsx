@@ -15,7 +15,7 @@ export default function useLlamadaApi(datoBuscar) {
             setLoading(false);
         } else {
             try {
-                const llamadaApi = await axios.get(`http://localhost:8000/${datoBuscar}`);
+                const llamadaApi = await axios.get(`http://localhost:8000/api/${datoBuscar}`);
                 localStorage.setItem(nombreItem, JSON.stringify(llamadaApi.data));
                 setDatosApi(llamadaApi.data);
                 setLoading(false);
