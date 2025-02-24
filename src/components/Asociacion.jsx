@@ -12,7 +12,7 @@ export function Asociacion({ id, name, description, image, email, phone_number, 
                     <span className="_asociacion_name">{name}</span>
                 </NavLink>
 
-                <img src={`https://yerary.informaticamajada.es/${image}`} alt={name} className="_asociacion_img_banner" />
+                <img src={`https://yeray.informaticamajada.es/${image}`} alt={name} className="_asociacion_img_banner" />
 
                 <div className="_asociacion_info">
                     <p className="_asociacion_description">{description}</p>
