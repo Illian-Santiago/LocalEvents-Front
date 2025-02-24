@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
-export default function LlamadaApi(datoBuscar) {
-    const [datosApi, setDatosApi] = useState([]);
+export default function useLlamadaApi(datoBuscar) {
+    const [datosApi, setDatosApi] = useState(null); // Inicializar como null
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); // Nuevo estado para errores
 
     const obtenerDatos = useCallback(async () => {
         const nombreItem = `${datoBuscar}Data`;
@@ -12,28 +13,26 @@ export default function LlamadaApi(datoBuscar) {
         if (datosExistentes) {
             setDatosApi(JSON.parse(datosExistentes));
             setLoading(false);
-
         } else {
             try {
-                const llamadaApi = await axios.get(`https://yeray.informaticamajada.es/api/${datoBuscar}`);
+                const llamadaApi = await axios.get(`http://localhost:8000/${datoBuscar}`);
                 localStorage.setItem(nombreItem, JSON.stringify(llamadaApi.data));
                 setDatosApi(llamadaApi.data);
                 setLoading(false);
-
+                setError(null); // Limpiar errores si la llamada es exitosa
             } catch (error) {
-                console.log('Fallo al llamar los datos:', error);
+                console.error('Fallo al llamar los datos:', error);
+                setError(error); // Guardar el error
                 setLoading(false);
             }
         }
-    }, []);
+    }, [datoBuscar]);
 
     useEffect(() => {
         obtenerDatos();
     }, [obtenerDatos]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
-    return (console.log(datosApi.data));
-};
+    return { datosApi, loading, error }; // Devolver error
+}
+

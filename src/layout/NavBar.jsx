@@ -4,7 +4,7 @@ import '../css/NavBar.css';
 import { useEstetico } from '../providers/ProviderEstetico';
 import gato from "../assets/gato.jpg";
 import { users } from "../data/User";
-import logo from "../assets/LocalEvents.jpg";
+import logo from "../assets/localEvents.ico";
 
 export function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -47,20 +47,20 @@ export function Navbar() {
         function handleResize() {
             setShowExtraOptions(window.innerWidth <= 450);
         }
-    
-        handleResize(); 
+
+        handleResize();
         window.addEventListener('resize', handleResize);
-    
+
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
 
 
-    
+
     return (
         <nav className='navbar'>
-            <span 
+            <span
                 className="material-symbols-outlined menu-icon"
                 onClick={() => setAsideOpen(!AsideOpen)}
             >
@@ -81,7 +81,7 @@ export function Navbar() {
                         <button className="create-association">Crear +</button>
 
                         <div className="notifications-container" ref={notificationsRef}>
-                            <span 
+                            <span
                                 className="material-symbols-outlined notification-icon"
                                 onClick={() => setNotificationsOpen(!notificationsOpen)}
                             >
@@ -111,7 +111,7 @@ export function Navbar() {
                         </div>
                     </>
                 )}
-                
+
                 <div className="profile-container" ref={menuRef}>
                     <img
                         className="profile"
@@ -131,16 +131,16 @@ export function Navbar() {
                             )}
                             <NavLink to="/">Configuración</NavLink>
 
-                            <button 
+                            <button
                                 className="dark-mode-toggle"
                                 onClick={() => setDarkMode(!darkMode)}
                             >
-                                Dark Mode 
+                                Dark Mode
                                 <span className="material-symbols-outlined">
                                     {darkMode ? "toggle_on" : "toggle_off"}
                                 </span>
                             </button>
-                            
+
                             <NavLink to="/">
                                 Cerrar Sesión
                             </NavLink>
