@@ -24,7 +24,7 @@ export function EventoInfo() {
     return (
         <div className="evento-info-container">
             <div className="evento-info-header">
-                <img src={`http://yeray.informaticamajada.es/${evento.image}`} alt="Evento" className="evento-info-img" />
+                <img src={`https://yeray.informaticamajada.es/${evento.image}`} alt="Evento" className="evento-info-img" />
                 <h1 className="evento-info-title">{evento.title}</h1>
             </div>
 
