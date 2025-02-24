@@ -15,8 +15,8 @@ export function EventoInfo() {
         return <div>Error: No se pudo cargar el evento.</div>;
     }
 
-    if (!datosApi || !datosApi.data) { 
-        return <div>No se encontraron datos.</div>; 
+    if (!datosApi || !datosApi.data) {
+        return <div>No se encontraron datos.</div>;
     }
 
     const evento = datosApi.data;
@@ -24,7 +24,7 @@ export function EventoInfo() {
     return (
         <div className="evento-info-container">
             <div className="evento-info-header">
-                <img src={`http://localhost:8000/${evento.image}`} alt="Evento" className="evento-info-img" />
+                <img src={`http://yeray.informaticamajada.es/${evento.image}`} alt="Evento" className="evento-info-img" />
                 <h1 className="evento-info-title">{evento.title}</h1>
             </div>
 

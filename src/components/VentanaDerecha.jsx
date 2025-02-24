@@ -49,16 +49,16 @@ export function VentanaDerecha() {
                         {location.pathname === "/" && (
                             <>
                                 <div className="post-header">
-                                    <img 
-                                        src={`http://localhost:8000/${item.association?.image}`} 
-                                        alt="Asociación" 
-                                        className="post-asociacion-img" 
+                                    <img
+                                        src={`http://yeray.informaticamajada.es/${item.association?.image}`}
+                                        alt="Asociación"
+                                        className="post-asociacion-img"
                                     />
                                     <span className="post-nombre">{item.association?.name}</span>
                                 </div>
                                 <p className="post-contenido">{item.text}</p>
                                 {item.image && (
-                                    <img src={`http://localhost:8000/${item.image}`} alt="Post" className="post-img" />
+                                    <img src={`http://yeray.informaticamajada.es/${item.image}`} alt="Post" className="post-img" />
                                 )}
                             </>
                         )}
@@ -66,16 +66,16 @@ export function VentanaDerecha() {
                         {location.pathname === "/asociaciones" && (
                             <>
                                 <div className="post-header">
-                                    <img 
-                                        src={`http://localhost:8000/${item.association?.image}`} 
-                                        alt="Asociación" 
-                                        className="post-asociacion-img" 
+                                    <img
+                                        src={`http://yeray.informaticamajada.es/${item.association?.image}`}
+                                        alt="Asociación"
+                                        className="post-asociacion-img"
                                     />
                                     <span className="post-nombre">{item.title}</span>
                                 </div>
                                 <p className="post-contenido">{item.description}</p>
                                 {item.image && (
-                                    <img src={`http://localhost:8000/${item.image}`} alt="Evento" className="post-img" />
+                                    <img src={`http://yeray.informaticamajada.es/${item.image}`} alt="Evento" className="post-img" />
                                 )}
                             </>
                         )}
@@ -83,10 +83,10 @@ export function VentanaDerecha() {
                         {location.pathname === "/posts" && (
                             <>
                                 <div className="post-header">
-                                    <img 
-                                        src={`http://localhost:8000/${item.image}`} 
-                                        alt="Asociación" 
-                                        className="post-asociacion-img" 
+                                    <img
+                                        src={`http://yeray.informaticamajada.es/${item.image}`}
+                                        alt="Asociación"
+                                        className="post-asociacion-img"
                                     />
                                     <span className="post-nombre">{item.name}</span>
                                 </div>
