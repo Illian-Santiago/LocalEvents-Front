@@ -1,20 +1,32 @@
 import { useParams } from "react-router-dom";
 // import { NavLink } from 'react-router-dom';
 import { events } from "../data/Events";  
+import useLlamadaApi from "../providers/useLlamadaApi";
+
 import "../css/EventoInfo.css";
 
 export function EventoInfo() {
     const { id } = useParams();
-    const evento = events.find(event => event.id === parseInt(id));
+    const { datosApi, loading, error } = useLlamadaApi(`events/${id}`);
 
-    if (!evento) {
-        return <p className="evento-info-error">Evento no encontrado.</p>;
+    if (loading) {
+        return <div>Loading...</div>;
     }
+
+    if (error) {
+        return <div>Error: No se pudo cargar el evento.</div>;
+    }
+
+    if (!datosApi || !datosApi.data) {
+        return <div>No se encontraron datos.</div>;
+    }
+
+    const evento = datosApi.data;
 
     return (
         <div className="evento-info-container">
             <div className="evento-info-header">
-                <img src={evento.image} alt="Evento" className="evento-info-img" />
+                <img src={`https://yeray.informaticamajada.es/${evento.image}`} alt="Evento" className="evento-info-img" />
                 <h1 className="evento-info-title">{evento.title}</h1>
             </div>
 
@@ -37,13 +49,9 @@ export function EventoInfo() {
             </div>
 
             <div className="evento-info-footer">
-                
                 <button className="btn-evento-info btn-evento-forum">
-                    <span className="material-symbols-outlined">
-                        forum
-                    </span>
+                    <span className="material-symbols-outlined">forum</span>
                 </button>
-
                 <button className="btn-evento-info btn-evento-join">Unirse</button>
             </div>
         </div>
