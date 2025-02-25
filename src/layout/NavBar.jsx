@@ -78,7 +78,9 @@ export function Navbar() {
             <div className="nav-actions">
                 {!showExtraOptions && (
                     <>
-                        <button className="create-association">Crear +</button>
+                        <NavLink to="/CreacionAsociaciones">
+                            <button className="create-association">Crear +</button>
+                        </NavLink>
 
                         <div className="notifications-container" ref={notificationsRef}>
                             <span
