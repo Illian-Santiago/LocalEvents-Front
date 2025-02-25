@@ -26,7 +26,7 @@ export function Asociacion({ id, name, description, image, email, phone_number, 
                         <button className="_btn_asociacion _btn_contact">Info</button>
                     </NavLink>
 
-                    <button className="_btn_asociacion">Unirse a esta asociación</button>
+                    <button className="_btn_asociacion">Unirse</button>
                 </div>
             </div>
 
