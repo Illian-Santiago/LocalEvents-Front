@@ -6,7 +6,7 @@ function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
-    return null; // Retornar null si la cookie no se encuentra
+    return window.location('https://yeray.informaticamajada.es'); // Retornar null si la cookie no se encuentra
 }
 
 export default function useLlamadaApi(datoBuscar) {
