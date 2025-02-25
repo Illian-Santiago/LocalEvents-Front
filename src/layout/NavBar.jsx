@@ -124,7 +124,7 @@ export function Navbar() {
 
                     {menuOpen && (
                         <div className="profile-menu">
-                            <NavLink to="/perfil">Ver Perfil</NavLink>
+                            <NavLink to="https://yeray.informaticamajada.es/profile">Ver Perfil</NavLink>
                             {showExtraOptions && (
                                 <>
                                     <button className="create-association">Crear +</button>
