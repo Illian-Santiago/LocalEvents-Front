@@ -37,7 +37,7 @@ export default function useLlamadaApi(datoBuscar) {
         } else {
             try {
                 // No borrar el withCredentials porfavor es necesario para el CORS, si no se pone no se podrá hacer la llamada.
-                const llamadaApi = await axios.get(`http://localhost/api/${datoBuscar}`, {
+                const llamadaApi = await axios.get(`https://yeray.informaticamajada.es/api/${datoBuscar}`, {
                     withCredentials: true,
                     headers: {
                         'X-XSRF-TOKEN': token // Incluir el token en los headers
