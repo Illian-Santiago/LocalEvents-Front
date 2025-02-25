@@ -131,7 +131,7 @@ export function Navbar() {
                                     <NavLink to="/notificaciones">Notificaciones</NavLink>
                                 </>
                             )}
-                            <NavLink to="/">Configuración</NavLink>
+                            <NavLink to="https://yeray.informaticamajada.es/users">Configuración</NavLink>
 
                             <button
                                 className="dark-mode-toggle"
