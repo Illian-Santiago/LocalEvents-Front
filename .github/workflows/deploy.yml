@@ -3,7 +3,7 @@ name: Despliegue del front-end
 on:
   push:
     branches:
-      - Illian
+      - development
   workflow_dispatch:
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: "
             cd /var/www/html/LocalEvents-Front;
-            git stash
+            git stash;
             git pull origin development;
             npm install;
             npm run build;
