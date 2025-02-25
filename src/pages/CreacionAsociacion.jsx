@@ -22,7 +22,7 @@ export function CreacionAsociacion() {
     const [errorMessage, setErrorMessage] = useState('');
     const [formTouched, setFormTouched] = useState(false);
 
-    const { loading, error } = useLlamadaApi('associations');
+    const { loading, error, token } = useLlamadaApi('associations');
 
     useEffect(() => {
         if (successMessage || errorMessage) {
@@ -49,7 +49,12 @@ export function CreacionAsociacion() {
         setErrorMessage('');
 
         try {
-            const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formData);
+            const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formData, {
+                withCredentials: true,
+                headers: {
+                    'X-XSRF-TOKEN': token // Incluir el token en los headers
+                }
+            });
             console.log('Asociación creada:', response.data);
             setSuccessMessage('¡Asociación creada exitosamente!');
             setFormData({
