@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import '../css/NavBar.css';
 import { useEstetico } from '../providers/ProviderEstetico';
 import gato from "../assets/gato.jpg";
-import { users } from "../data/User";
 import logo from "../assets/localEvents.ico";
 
 export function Navbar() {
@@ -14,6 +13,7 @@ export function Navbar() {
     const menuRef = useRef(null);
     const notificationsRef = useRef(null);
     const { AsideOpen, setAsideOpen } = useEstetico();
+    const { searchQuery, setSearchQuery } = useEstetico();
 
     console.log('AsideOpen', AsideOpen);
 
@@ -72,7 +72,12 @@ export function Navbar() {
             </NavLink>
 
             <div className="search-bar">
-                <input type="text" placeholder="Buscador" />
+                <input 
+                    type="text" 
+                    placeholder="Buscardor" 
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)} 
+                />
             </div>
 
             <div className="nav-actions">

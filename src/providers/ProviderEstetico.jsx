@@ -6,17 +6,16 @@ export const useEstetico = () => useContext(EsteticoContext);
 
 
 export function ProviderEstetico({ children }) {
-
     const [AsideOpen, setAsideOpen] = useState(false);
-
+    const [searchQuery, setSearchQuery] = useState("");
 
     return(
-        <>
-            <EsteticoContext.Provider value={{AsideOpen, setAsideOpen}}>
-                {children}
-            </EsteticoContext.Provider>
-        </>
-    )
+        <EsteticoContext.Provider value={{ AsideOpen, setAsideOpen, searchQuery, setSearchQuery }}>
+            {children}
+            
+        </EsteticoContext.Provider>
+    );
 }
+
 
 export default ProviderEstetico;
