@@ -22,7 +22,6 @@ export default function useLlamadaApi(datoBuscar) {
         // Obtener el token de la cookie
         const token = getCookie('XSRF-TOKEN');
         setToken(token); // Guardar el token en el estado
-        console.log('Token obtenido de la cookie:', token); // Log para verificar el token
 
         if (!token) {
             console.error('Token no encontrado en la cookie');
@@ -43,7 +42,6 @@ export default function useLlamadaApi(datoBuscar) {
                         'X-XSRF-TOKEN': token // Incluir el token en los headers
                     }
                 });
-                console.log('Respuesta de la API:', llamadaApi.data); // Log para verificar la respuesta de la API
                 localStorage.setItem(nombreItem, JSON.stringify(llamadaApi.data));
                 setDatosApi(llamadaApi.data);
                 setLoading(false);

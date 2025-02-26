@@ -4,15 +4,13 @@ import useLlamadaApi from '../providers/useLlamadaApi';
 import '../css/CreacionAsociacion.css';
 import { FaSpinner } from 'react-icons/fa';
 
-
 export function CreacionAsociacion() {
     const [formData, setFormData] = useState({
         name: '',
-        image: '',
+        imageFile: null, // Cambiar 'image' a 'imageFile' para manejar archivos
         email: '',
         phone_number: '',
         description: '',
-        level: 1,
         id_responsible: '',
         create_date: new Date().toISOString().slice(0, 19).replace('T', ' ')
     });
@@ -21,6 +19,7 @@ export function CreacionAsociacion() {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [formTouched, setFormTouched] = useState(false);
+    const [formErrors, setFormErrors] = useState({});
 
     const { loading, error, token } = useLlamadaApi('associations');
 
@@ -35,10 +34,18 @@ export function CreacionAsociacion() {
     }, [successMessage, errorMessage]);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value, files } = e.target;
+        if (name === 'imageFile') {
+            setFormData({
+                ...formData,
+                imageFile: files[0] // Manejar archivos
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
         setFormTouched(true);
     };
 
@@ -48,22 +55,34 @@ export function CreacionAsociacion() {
         setSuccessMessage('');
         setErrorMessage('');
 
+        // Validar que la imagen no sea nula
+        if (!formData.imageFile) {
+            setFormErrors({ imageFile: 'La imagen es obligatoria.' });
+            setIsSubmitting(false);
+            return;
+        }
+
+        const formDataToSend = new FormData();
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
         try {
-            const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formData, {
+            const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formDataToSend, {
                 withCredentials: true,
                 headers: {
-                    'X-XSRF-TOKEN': token // Incluir el token en los headers
+                    'X-XSRF-TOKEN': token, // Incluir el token en los headers
+                    'Content-Type': 'multipart/form-data' // Asegurarse de que el contenido sea multipart/form-data
                 }
             });
             console.log('Asociación creada:', response.data);
             setSuccessMessage('¡Asociación creada exitosamente!');
             setFormData({
                 name: '',
-                image: '',
+                imageFile: null,
                 email: '',
                 phone_number: '',
                 description: '',
-                level: 1,
                 id_responsible: '',
                 create_date: new Date().toISOString().slice(0, 19).replace('T', ' ')
             });
@@ -71,7 +90,11 @@ export function CreacionAsociacion() {
 
         } catch (error) {
             if (error.response) {
-                setErrorMessage('Error: ' + error.response.data.message);
+                if (error.response.data.message.includes('Duplicate entry')) {
+                    setErrorMessage('Error: Este correo electrónico ya ha creado una asocicion.');
+                } else {
+                    setErrorMessage('Error: ' + error.response.data.message);
+                }
                 console.error('Error:', error.response.data);
             } else {
                 setErrorMessage('Error: ' + error.message);
@@ -106,8 +129,9 @@ export function CreacionAsociacion() {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="image" className="form-label">Imagen (URL):</label>
-                        <input type="url" id="image" name="image" placeholder="URL de la imagen" value={formData.image} onChange={handleChange} className={`form-input ${formData.image ? 'input-filled' : ''}`} />
+                        <label htmlFor="imageFile" className="form-label">Imagen de perfil (Obligatoria):</label>
+                        <input type="file" id="imageFile" name="imageFile" onChange={handleChange} className="form-input" required />
+                        {formErrors.imageFile && <p className="error-message">{formErrors.imageFile}</p>}
                     </div>
 
                     <div className="form-group">
@@ -126,11 +150,6 @@ export function CreacionAsociacion() {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="level" className="form-label">Nivel:</label>
-                        <input type="number" id="level" name="level" placeholder="Nivel (1-255)" value={formData.level} onChange={handleChange} required min="1" max="255" className={`form-input ${formData.level ? 'input-filled' : ''}`} />
-                    </div>
-
-                    <div className="form-group">
                         <label htmlFor="id_responsible" className="form-label">ID Responsable:</label>
                         <input type="text" id="id_responsible" name="id_responsible" placeholder="ID del responsable" value={formData.id_responsible} onChange={handleChange} required className={`form-input ${formData.id_responsible ? 'input-filled' : ''}`} />
                     </div>
@@ -141,6 +160,8 @@ export function CreacionAsociacion() {
                         </button>
                     </div>
 
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    {successMessage && <p className="success-message">{successMessage}</p>}
                 </form>
             </div>
         </div>
