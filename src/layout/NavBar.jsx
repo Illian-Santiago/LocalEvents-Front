@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import '../css/NavBar.css';
 import { useEstetico } from '../providers/ProviderEstetico';
 import gato from "../assets/gato.jpg";
-import { users } from "../data/User";
 import logo from "../assets/localEvents.ico";
 
 export function Navbar() {
