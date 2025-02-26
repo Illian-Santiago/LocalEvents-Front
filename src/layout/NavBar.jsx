@@ -124,14 +124,14 @@ export function Navbar() {
 
                     {menuOpen && (
                         <div className="profile-menu">
-                            <NavLink to="/perfil">Ver Perfil</NavLink>
+                            <NavLink to="https://yeray.informaticamajada.es/profile">Ver Perfil</NavLink>
                             {showExtraOptions && (
                                 <>
                                     <button className="create-association">Crear +</button>
                                     <NavLink to="/notificaciones">Notificaciones</NavLink>
                                 </>
                             )}
-                            <NavLink to="/">Configuración</NavLink>
+                            <NavLink to="https://yeray.informaticamajada.es/users">Configuración</NavLink>
 
                             <button
                                 className="dark-mode-toggle"
