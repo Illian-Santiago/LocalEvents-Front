@@ -1,4 +1,6 @@
 import { useParams } from "react-router-dom";
+// import { NavLink } from 'react-router-dom';
+import { events } from "../data/Events";  
 import useLlamadaApi from "../providers/useLlamadaApi";
 
 import "../css/EventoInfo.css";
