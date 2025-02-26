@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import useLlamadaApi from '../providers/useLlamadaApi';
+import '../css/CreacionAsociacion.css';
 import { FaSpinner } from 'react-icons/fa';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function CreacionAsociacion() {
     const [formData, setFormData] = useState({
         name: '',
-        image: '',
+        imageFile: null, // Cambiar 'image' a 'imageFile' para manejar archivos
         email: '',
         phone_number: '',
         description: '',
-        level: 1,
         id_responsible: '',
         create_date: new Date().toISOString().slice(0, 19).replace('T', ' ')
     });
@@ -20,6 +19,7 @@ export function CreacionAsociacion() {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [formTouched, setFormTouched] = useState(false);
+    const [formErrors, setFormErrors] = useState({});
 
     const { loading, error, token } = useLlamadaApi('associations');
 
@@ -34,10 +34,18 @@ export function CreacionAsociacion() {
     }, [successMessage, errorMessage]);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value, files } = e.target;
+        if (name === 'imageFile') {
+            setFormData({
+                ...formData,
+                imageFile: files[0] // Manejar archivos
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
         setFormTouched(true);
     };
 
@@ -47,22 +55,34 @@ export function CreacionAsociacion() {
         setSuccessMessage('');
         setErrorMessage('');
 
+        // Validar que la imagen no sea nula
+        if (!formData.imageFile) {
+            setFormErrors({ imageFile: 'La imagen es obligatoria.' });
+            setIsSubmitting(false);
+            return;
+        }
+
+        const formDataToSend = new FormData();
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
         try {
-            const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formData, {
+            const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formDataToSend, {
                 withCredentials: true,
                 headers: {
-                    'X-XSRF-TOKEN': token // Incluir el token en los headers
+                    'X-XSRF-TOKEN': token, // Incluir el token en los headers
+                    'Content-Type': 'multipart/form-data' // Asegurarse de que el contenido sea multipart/form-data
                 }
             });
             console.log('Asociación creada:', response.data);
             setSuccessMessage('¡Asociación creada exitosamente!');
             setFormData({
                 name: '',
-                image: '',
+                imageFile: null,
                 email: '',
                 phone_number: '',
                 description: '',
-                level: 1,
                 id_responsible: '',
                 create_date: new Date().toISOString().slice(0, 19).replace('T', ' ')
             });
@@ -70,7 +90,11 @@ export function CreacionAsociacion() {
 
         } catch (error) {
             if (error.response) {
-                setErrorMessage('Error: ' + error.response.data.message);
+                if (error.response.data.message.includes('Duplicate entry')) {
+                    setErrorMessage('Error: Este correo electrónico ya ha creado una asocicion.');
+                } else {
+                    setErrorMessage('Error: ' + error.response.data.message);
+                }
                 console.error('Error:', error.response.data);
             } else {
                 setErrorMessage('Error: ' + error.message);
@@ -91,48 +115,54 @@ export function CreacionAsociacion() {
     }
 
     if (error) {
-        return <div className="alert-error">Error: {error.message}</div>;
+        return <div className="error-container">Error: {error.message}</div>;
     }
 
     return (
-        <div className={`container mt-5 ${formTouched ? 'was-validated' : ''}`}>
-            <div className="card">
-                <div className="card-body">
-                    <h2 className="card-title">Crear Nueva Asociación</h2>
-                    <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-                        <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Nombre:</label>
-                            <input type="text" id="name" name="name" placeholder="Nombre de la asociación" value={formData.name} onChange={handleChange} required className={`form-control ${formData.name ? 'is-valid' : ''}`} />
-                        </div>
+        <div className={`form-container ${formTouched ? 'form-touched' : ''}`}>
+            <div className="form-content">
+                <h2 className="form-title">Crear Nueva Asociación</h2>
+                <form onSubmit={handleSubmit} className="association-form" noValidate>
+                    <div className="form-group">
+                        <label htmlFor="name" className="form-label">Nombre:</label>
+                        <input type="text" id="name" name="name" placeholder="Nombre de la asociación" value={formData.name} onChange={handleChange} required className={`form-input ${formData.name ? 'input-filled' : ''}`} />
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email:</label>
-                            <input type="email" id="email" name="email" placeholder="Correo electrónico" value={formData.email} onChange={handleChange} required className={`form-control ${formData.email ? 'is-valid' : ''}`} />
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="imageFile" className="form-label">Imagen de perfil (Obligatoria):</label>
+                        <input type="file" id="imageFile" name="imageFile" onChange={handleChange} className="form-input" required />
+                        {formErrors.imageFile && <p className="error-message">{formErrors.imageFile}</p>}
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="phone_number" className="form-label">Teléfono:</label>
-                            <input type="tel" id="phone_number" name="phone_number" placeholder="Número de teléfono" value={formData.phone_number} onChange={handleChange} required className={`form-control ${formData.phone_number ? 'is-valid' : ''}`} />
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Correo electrónico" value={formData.email} onChange={handleChange} required className={`form-input ${formData.email ? 'input-filled' : ''}`} />
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="description" className="form-label">Descripción:</label>
-                            <textarea id="description" name="description" placeholder="Descripción de la asociación" value={formData.description} onChange={handleChange} required className={`form-control ${formData.description ? 'is-valid' : ''}`} />
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="phone_number" className="form-label">Teléfono:</label>
+                        <input type="tel" id="phone_number" name="phone_number" placeholder="Número de teléfono" value={formData.phone_number} onChange={handleChange} required className={`form-input ${formData.phone_number ? 'input-filled' : ''}`} />
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="id_responsible" className="form-label">ID Responsable:</label>
-                            <input type='number' id="id_responsible" name="id_responsible" placeholder="ID del responsable" value={formData.id_responsible} onChange={handleChange} required className={`form-control ${formData.id_responsible ? 'is-valid' : ''}`} />
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="description" className="form-label">Descripción:</label>
+                        <textarea id="description" name="description" placeholder="Descripción de la asociación" value={formData.description} onChange={handleChange} required className={`form-input form-textarea ${formData.description ? 'input-filled' : ''}`} />
+                    </div>
 
-                        <div className="d-grid">
-                            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                                {isSubmitting ? <FaSpinner className="spinner-border spinner-border-sm" /> : 'Crear'}
-                            </button>
-                        </div>
+                    <div className="form-group">
+                        <label htmlFor="id_responsible" className="form-label">ID Responsable:</label>
+                        <input type="text" id="id_responsible" name="id_responsible" placeholder="ID del responsable" value={formData.id_responsible} onChange={handleChange} required className={`form-input ${formData.id_responsible ? 'input-filled' : ''}`} />
+                    </div>
 
-                    </form>
-                </div>
+                    <div className="button-container">
+                        <button type="submit" className="submit-button" disabled={isSubmitting}>
+                            {isSubmitting ? <FaSpinner className="button-spinner" /> : 'Crear'}
+                        </button>
+                    </div>
+
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    {successMessage && <p className="success-message">{successMessage}</p>}
+                </form>
             </div>
         </div>
     );

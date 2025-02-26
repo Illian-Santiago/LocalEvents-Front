@@ -18,12 +18,14 @@ export function VentanaDerecha() {
     } else if (location.pathname === "/posts") {
         titulo = "Asociaciones";
         endpoint = "associations";
-    } else {
-        return null; // No mostrar la ventana en otras rutas
     }
 
     // Llamada a la API según la ruta
     const { datosApi, loading, error } = useLlamadaApi(endpoint);
+
+    if (!endpoint) {
+        return null; // No mostrar la ventana en otras rutas
+    }
 
     if (loading) {
         return <div className="ventana-derecha"><h3>Cargando {titulo}...</h3></div>;

@@ -1,287 +1,411 @@
 /* CreacionAsociacion.css */
 
 .form-container {
-    display: flex; /* Usa flexbox */
+  display: flex; /* Usa flexbox */
+  width: 95%;
+  max-width: 800px; /* Aumenta el ancho máximo */
+  margin: 40px auto;
+  background-color: #fff;
+  border: 1px solid #ddd; /* Borde gris claro */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Pseudo-elemento para el gradiente ligero, estilo Reddit */
+.form-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #f6f7f8 0%, #fff 100px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.form-container.form-touched::before {
+  opacity: 1;
+}
+
+.form-content {
+  flex-grow: 1; /* Permite que el contenido del formulario ocupe el espacio disponible */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-voting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  background-color: #f8f9fa; /* Fondo gris claro para la sección de votos */
+  border-right: 1px solid #ddd;
+}
+
+.vote-arrow {
+  color: #888; /* Color gris para las flechas */
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin: 2px 0;
+  transition: color 0.2s;
+}
+.vote-arrow:disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+.vote-arrow.upvote:hover {
+  color: #ff4500; /* Naranja Reddit para upvote */
+}
+
+.vote-arrow.downvote:hover {
+  color: #7193ff; /* Azul Reddit para downvote */
+}
+
+.vote-count {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+  margin: 5px 0;
+}
+
+.form-title {
+  margin-bottom: 25px;
+  color: #1a1a1b;
+  font-size: 1.4rem; /* Reduce el tamaño del título */
+  font-weight: 500;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee; /* Agrega una línea inferior */
+  padding-bottom: 10px;
+}
+
+.association-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #777; /* Color de etiqueta más oscuro */
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #0079d3; /* Azul Reddit al enfocar */
+  box-shadow: 0 0 0 2px rgba(0, 121, 211, 0.2);
+  outline: none;
+}
+
+.form-input.input-filled,
+.form-textarea.input-filled {
+  border-color: #80bdff;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.button-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.submit-button {
+  background-color: #0079d3;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #005cb9;
+}
+.submit-button:disabled {
+  background-color: #8f8f8f;
+}
+
+.button-spinner {
+  margin-right: 5px;
+  animation: spin 1s linear infinite;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  margin-top: auto; /* Empuja el footer hacia abajo */
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+.comment-icon {
+  color: #888;
+  font-size: 1.2rem;
+}
+
+.comment-count {
+  color: #888;
+  font-size: 0.8rem;
+  margin-left: 5px;
+}
+
+/* Estilos de los mensajes */
+.success-message,
+.error-message {
+  padding: 10px 15px;
+  margin-top: 15px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease-out;
+}
+
+.success-message {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+}
+
+.error-message {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
+.success-icon,
+.error-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #343a40;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  font-size: 2rem;
+  color: #0079d3; /* Azul Reddit */
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark Mode */
+
+[data-theme="dark"] .form-container {
+  background-color: #121212; /* Fondo oscuro principal */
+  border-color: #333; /* Bordes más oscuros */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+  color: #ddd; /* Texto claro */
+}
+
+[data-theme="dark"] .form-container::before {
+  background: linear-gradient(
+    to bottom,
+    #1a1a1a 0%,
+    #121212 100px
+  ); /* Gradiente oscuro */
+  /* No es necesario, pero se puede ajustar la opacidad si se desea un efecto */
+  /* opacity: 0.5;  */
+}
+
+[data-theme="dark"] .post-voting {
+  background-color: #1a1a1a; /* Fondo oscuro para la sección de votos */
+  border-right-color: #333;
+}
+
+[data-theme="dark"] .vote-arrow {
+  color: #bbb; /* Flechas más claras */
+}
+[data-theme="dark"] .vote-arrow:disabled {
+  color: #555;
+}
+
+[data-theme="dark"] .vote-arrow.upvote:hover {
+  color: #ff6b35; /* Naranja más brillante para upvote */
+}
+
+[data-theme="dark"] .vote-arrow.downvote:hover {
+  color: #85a5ff; /* Azul más brillante para downvote */
+}
+
+[data-theme="dark"] .vote-count {
+  color: #ccc; /* Color de conteo más claro */
+}
+
+[data-theme="dark"] .form-title {
+  color: #f0f0f0; /* Título más claro */
+  border-bottom-color: #444; /* Línea inferior más oscura */
+}
+
+[data-theme="dark"] .form-label {
+  color: #bbb; /* Etiquetas más claras */
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-textarea {
+  background-color: #2a2a2a; /* Fondo más oscuro para inputs */
+  border-color: #444; /* Borde más oscuro */
+  color: #ddd; /* Texto claro */
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-textarea:focus {
+  border-color: #0096ff; /* Azul más brillante al enfocar */
+  box-shadow: 0 0 0 2px rgba(0, 150, 255, 0.4); /* Resplandor más claro */
+}
+
+[data-theme="dark"] .form-input.input-filled,
+[data-theme="dark"] .form-textarea.input-filled {
+  border-color: #4d90fe;
+}
+
+[data-theme="dark"] .submit-button {
+  background-color: #0079d3; /* Mismo color de botón */
+  color: #fff; /* Texto blanco */
+}
+
+[data-theme="dark"] .submit-button:hover {
+  background-color: #005cb9; /* Mismo color de botón al pasar el ratón */
+}
+
+[data-theme="dark"] .submit-button:disabled {
+  background-color: #555; /* Botón deshabilitado más oscuro */
+}
+
+[data-theme="dark"] .form-footer {
+  border-top-color: #444; /* Línea superior del footer más oscura */
+}
+
+[data-theme="dark"] .comment-icon {
+  color: #bbb; /* Icono de comentario más claro */
+}
+
+[data-theme="dark"] .comment-count {
+  color: #bbb; /* Conteo de comentarios más claro */
+}
+
+[data-theme="dark"] .success-message {
+  background-color: #2a472a; /* Verde más oscuro */
+  color: #c3e6cb; /* Texto verde claro */
+  border-color: #3a673a;
+}
+
+[data-theme="dark"] .error-message {
+  background-color: #5c2b2b; /* Rojo más oscuro */
+  color: #f5c6cb; /* Texto rojo claro */
+  border-color: #783f3f;
+}
+
+[data-theme="dark"] .success-icon,
+[data-theme="dark"] .error-icon {
+  color: #fff; /* Iconos blancos para mayor contraste */
+}
+
+[data-theme="dark"] .loading-container {
+  color: #ddd;
+}
+
+[data-theme="dark"] .spinner {
+  color: #0096ff; /* Azul más brillante para el spinner */
+}
+
+/* Ajustes para el modo oscuro responsive (si es necesario)*/
+@media (max-width: 768px) {
+  [data-theme="dark"] .post-voting {
+    border-top-color: #333;
+    background-color: transparent;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column; /* Apila los elementos en columna en pantallas pequeñas */
     width: 95%;
-    max-width: 800px; /* Aumenta el ancho máximo */
-    margin: 40px auto;
-    background-color: #fff;
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    overflow: hidden;
-    position: relative;
+    margin: 20px auto;
+    border-radius: 0; /* Sin bordes redondeados en pantallas pequeñas */
   }
-  
-  /* Pseudo-elemento para el gradiente ligero, estilo Reddit */
-  .form-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, #f6f7f8 0%, #fff 100px);
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s;
-  }
-  
-  .form-container.form-touched::before {
-    opacity: 1;
-  }
-  
-  .form-content {
-      flex-grow: 1; /* Permite que el contenido del formulario ocupe el espacio disponible */
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-  
-  }
-  
+
   .post-voting {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 5px;
-    background-color: #f8f9fa; /* Fondo gris claro para la sección de votos */
-    border-right: 1px solid #ddd;
+    flex-direction: row; /* En pantallas pequeñas, los votos se muestran horizontalmente */
+    order: 2; /*Se muestran despues del form */
+    width: 100%; /*Ancho completo */
+    justify-content: center; /*Centra los votos */
+    background-color: transparent; /*Elimina el fondo gris */
+    border-right: none;
+    border-top: 1px solid #ddd; /*Separador arriba */
+    padding: 5px 0;
   }
-  
+
   .vote-arrow {
-    color: #888; /* Color gris para las flechas */
-    cursor: pointer;
-    font-size: 1.5rem;
-    margin: 2px 0;
-    transition: color 0.2s;
+    font-size: 1.2rem; /* Tamaño ligeramente reducido */
   }
-  .vote-arrow:disabled {
-    color: #ccc;
-    cursor: default;
+
+  .form-content {
+    order: 1;
   }
-  
-  .vote-arrow.upvote:hover {
-    color: #ff4500; /* Naranja Reddit para upvote */
-  }
-  
-  .vote-arrow.downvote:hover {
-    color: #7193ff; /* Azul Reddit para downvote */
-  }
-  
-  .vote-count {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: #333;
-    margin: 5px 0;
-  }
-  
+
   .form-title {
-      margin-bottom: 25px;
-      color: #1a1a1b;
-      font-size: 1.4rem; /* Reduce el tamaño del título */
-      font-weight: 500;
-      line-height: 1.2;
-      border-bottom: 1px solid #eee; /* Agrega una línea inferior */
-      padding-bottom: 10px;
-  }
-  
-  .association-form {
-      display: flex;
-      flex-direction: column;
-  }
-  
-  .form-group {
+    font-size: 1.2rem;
     margin-bottom: 15px;
   }
-  
-  .form-label {
-      display: block;
-      margin-bottom: 5px;
-      color: #777; /* Color de etiqueta más oscuro */
-      font-size: 0.9rem;
-      font-weight: bold;
-  
-  }
-  
+
   .form-input,
-  .form-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 0.9rem;
-    color: #333;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  
-  .form-input:focus,
-  .form-textarea:focus {
-      border-color: #0079d3; /* Azul Reddit al enfocar */
-      box-shadow: 0 0 0 2px rgba(0, 121, 211, 0.2);
-      outline: none;
-  }
-  
-  .form-input.input-filled,
-  .form-textarea.input-filled {
-      border-color: #80bdff;
-  
-  }
-  
-  .form-textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  
-  .button-container {
-      margin-top: 15px;
-      display: flex;
-      justify-content: flex-start;
-  }
-  
+  .form-textarea,
   .submit-button {
-      background-color: #0079d3;
-      color: white;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: background-color 0.2s;
+    font-size: 0.85rem;
   }
-  
-  .submit-button:hover {
-    background-color: #005cb9;
+
+  .form-label {
+    font-size: 0.85rem;
   }
-  .submit-button:disabled{
-    background-color: #8f8f8f;
+
+  .button-container {
+    justify-content: center;
   }
-  
-  .button-spinner {
-      margin-right: 5px;
-      animation: spin 1s linear infinite;
-  }
-  
   .form-footer {
-      display: flex;
-      align-items: center;
-      margin-top: auto; /* Empuja el footer hacia abajo */
-      padding-top: 10px;
-      border-top: 1px solid #eee;
-  
+    justify-content: center; /* Centra el contenido del footer */
   }
-  .comment-icon {
-      color: #888;
-      font-size: 1.2rem;
-  }
-  
-  .comment-count {
-      color: #888;
-      font-size: 0.8rem;
-      margin-left: 5px;
-  }
-  
-  /* Estilos de los mensajes */
-  .success-message,
-  .error-message {
-      padding: 10px 15px;
-      margin-top: 15px;
-      border-radius: 4px;
-      text-align: center;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s ease-out;
-  }
-  
-  .success-message {
-      background-color: #dff0d8;
-      color: #3c763d;
-      border: 1px solid #d6e9c6;
-  }
-  
-  .error-message {
-      background-color: #f2dede;
-      color: #a94442;
-      border: 1px solid #ebccd1;
-  }
-  
-  .success-icon,
-  .error-icon {
-      margin-right: 8px;
-      font-size: 1.2rem;
-  }
-  
-  .loading-container {
-      text-align: center;
-      padding: 40px;
-      font-size: 1.2rem;
-      color: #343a40;
-  }
-  
-  .spinner {
-      animation: spin 1s linear infinite;
-      font-size: 2rem;
-      color: #0079d3; /* Azul Reddit */
-  }
-  
-  @keyframes spin {
-      to { transform: rotate(360deg); }
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-      .form-container {
-          flex-direction: column; /* Apila los elementos en columna en pantallas pequeñas */
-          width: 95%;
-          margin: 20px auto;
-          border-radius: 0; /* Sin bordes redondeados en pantallas pequeñas */
-      }
-  
-      .post-voting {
-        flex-direction: row; /* En pantallas pequeñas, los votos se muestran horizontalmente */
-        order: 2;      /*Se muestran despues del form */
-        width: 100%;    /*Ancho completo */
-        justify-content: center; /*Centra los votos */
-        background-color: transparent; /*Elimina el fondo gris */
-        border-right: none;
-        border-top: 1px solid #ddd; /*Separador arriba */
-        padding: 5px 0;
-      }
-  
-      .vote-arrow{
-        font-size: 1.2rem; /* Tamaño ligeramente reducido */
-      }
-  
-      .form-content{
-        order: 1;
-      }
-  
-      .form-title {
-          font-size: 1.2rem;
-          margin-bottom: 15px;
-      }
-  
-      .form-input,
-      .form-textarea,
-      .submit-button {
-          font-size: 0.85rem;
-      }
-  
-      .form-label{
-        font-size: 0.85rem;
-      }
-  
-      .button-container{
-        justify-content: center;
-      }
-       .form-footer {
-          justify-content: center; /* Centra el contenido del footer */
-  
-      }
-  }
+}
