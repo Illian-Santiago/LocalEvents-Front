@@ -1,7 +1,6 @@
-import { useParams } from "react-router-dom";
-// import { NavLink } from 'react-router-dom';
-import { events } from "../data/Events";  
+import { useParams } from "react-router-dom";  
 import useLlamadaApi from "../providers/useLlamadaApi";
+import Footer from "../layout/Footer";
 
 import "../css/EventoInfo.css";
 
@@ -24,6 +23,7 @@ export function EventoInfo() {
     const evento = datosApi.data;
 
     return (
+    <div>
         <div className="evento-info-container">
             <div className="evento-info-header">
                 <img src={`https://yeray.informaticamajada.es/${evento.image}`} alt="Evento" className="evento-info-img" />
@@ -55,6 +55,8 @@ export function EventoInfo() {
                 <button className="btn-evento-info btn-evento-join">Unirse</button>
             </div>
         </div>
+        <Footer />
+    </div>
     );
 }
 
