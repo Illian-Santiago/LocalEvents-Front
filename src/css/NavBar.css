@@ -246,6 +246,36 @@ nav img {
     background: #e1ebee;
 }
 
+.create-container {
+    position: relative;
+}
+
+.create-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 200px;
+    padding: 10px;
+    z-index: 1000;
+    color: #000000;
+}
+
+.create-menu-item {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.create-menu-item:hover {
+    background-color: #e1ebee;
+}
 
 /* 
 
@@ -263,8 +293,6 @@ nav img {
 
 
 */
-
-
 
 [data-theme="dark"] .navbar {
     background-color: #181818;
@@ -363,6 +391,19 @@ nav img {
     background: #333;
 }
 
+[data-theme="dark"] .create-menu {
+    background: #222222;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+[data-theme="dark"] .create-menu-item {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .create-menu-item:hover {
+    background: #333;
+}
 
 /* 
 

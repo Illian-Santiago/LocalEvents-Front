@@ -6,6 +6,7 @@ import Perfil from './pages/Perfil'
 import Gestion from './pages/Gestion'
 import Notificaciones from './pages/Notificaciones'
 import CreacionAsociacion from './pages/CreacionAsociacion'
+import CreacionEventos from './pages/CreacionEventos'
 import { ProviderEstetico } from './providers/ProviderEstetico'
 import EventoInfo from './components/EventoInfo'
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/gestion" element={<Gestion />} />
           <Route path="/creacionAsociaciones" element={<CreacionAsociacion />} />
+          <Route path="/creacionEventos" element={<CreacionEventos />} />
           <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/EventoInfo/:id" element={<EventoInfo />} />
         </Route>

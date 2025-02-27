@@ -10,8 +10,10 @@ export function Navbar() {
     const [notificationsOpen, setNotificationsOpen] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
     const [showExtraOptions, setShowExtraOptions] = useState(false);
+    const [createMenuOpen, setCreateMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const notificationsRef = useRef(null);
+    const createMenuRef = useRef(null);
     const { AsideOpen, setAsideOpen } = useEstetico();
     const { searchQuery, setSearchQuery } = useEstetico();
 
@@ -35,6 +37,9 @@ export function Navbar() {
             if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
                 setNotificationsOpen(false);
             }
+            if (createMenuRef.current && !createMenuRef.current.contains(event.target)) {
+                setCreateMenuOpen(false);
+            }
         }
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -56,8 +61,6 @@ export function Navbar() {
         };
     }, []);
 
-
-
     return (
         <nav className='navbar'>
             <span
@@ -74,7 +77,7 @@ export function Navbar() {
             <div className="search-bar">
                 <input 
                     type="text" 
-                    placeholder="Buscardor" 
+                    placeholder="Buscador" 
                     value={searchQuery} 
                     onChange={(e) => setSearchQuery(e.target.value)} 
                 />
@@ -83,9 +86,15 @@ export function Navbar() {
             <div className="nav-actions">
                 {!showExtraOptions && (
                     <>
-                        <NavLink to="/CreacionAsociaciones">
-                            <button className="create-association">Crear +</button>
-                        </NavLink>
+                        <div className="create-container" ref={createMenuRef}>
+                            <button className="create-association" onClick={() => setCreateMenuOpen(!createMenuOpen)}>Crear +</button>
+                            {createMenuOpen && (
+                                <div className="create-menu">
+                                    <NavLink to="/creacionAsociaciones" className="create-menu-item">Crear Asociación</NavLink>
+                                    <NavLink to="/creacionEventos" className="create-menu-item">Crear Evento</NavLink>
+                                </div>
+                            )}
+                        </div>
 
                         <div className="notifications-container" ref={notificationsRef}>
                             <span
@@ -132,7 +141,13 @@ export function Navbar() {
                             <NavLink to="https://yeray.informaticamajada.es/profile">Ver Perfil</NavLink>
                             {showExtraOptions && (
                                 <>
-                                    <button className="create-association">Crear +</button>
+                                    <button className="create-association" onClick={() => setCreateMenuOpen(!createMenuOpen)}>Crear +</button>
+                                    {createMenuOpen && (
+                                        <div className="create-menu">
+                                            <NavLink to="/creacionAsociaciones" className="create-menu-item">Crear Asociación</NavLink>
+                                            <NavLink to="/creacionEventos" className="create-menu-item">Crear Evento</NavLink>
+                                        </div>
+                                    )}
                                     <NavLink to="/notificaciones">Notificaciones</NavLink>
                                 </>
                             )}
