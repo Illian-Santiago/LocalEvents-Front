@@ -7,7 +7,7 @@ import { FaSpinner } from 'react-icons/fa';
 export function CreacionAsociacion() {
     const [formData, setFormData] = useState({
         name: '',
-        imageFile: null, // Cambiar 'image' a 'imageFile' para manejar archivos
+        imageFile: null,
         email: '',
         phone_number: '',
         description: '',
@@ -38,7 +38,7 @@ export function CreacionAsociacion() {
         if (name === 'imageFile') {
             setFormData({
                 ...formData,
-                imageFile: files[0] // Manejar archivos
+                imageFile: files[0]
             });
         } else {
             setFormData({
@@ -55,7 +55,6 @@ export function CreacionAsociacion() {
         setSuccessMessage('');
         setErrorMessage('');
 
-        // Validar que la imagen no sea nula
         if (!formData.imageFile) {
             setFormErrors({ imageFile: 'La imagen es obligatoria.' });
             setIsSubmitting(false);
@@ -71,8 +70,8 @@ export function CreacionAsociacion() {
             const response = await axios.post('https://yeray.informaticamajada.es/api/associations', formDataToSend, {
                 withCredentials: true,
                 headers: {
-                    'X-XSRF-TOKEN': token, // Incluir el token en los headers
-                    'Content-Type': 'multipart/form-data' // Asegurarse de que el contenido sea multipart/form-data
+                    'X-XSRF-TOKEN': token,
+                    'Content-Type': 'multipart/form-data'
                 }
             });
             console.log('Asociación creada:', response.data);
@@ -91,7 +90,7 @@ export function CreacionAsociacion() {
         } catch (error) {
             if (error.response) {
                 if (error.response.data.message.includes('Duplicate entry')) {
-                    setErrorMessage('Error: Este correo electrónico ya ha creado una asocicion.');
+                    setErrorMessage('Error: Este correo electrónico ya ha creado una asociación.');
                 } else {
                     setErrorMessage('Error: ' + error.response.data.message);
                 }

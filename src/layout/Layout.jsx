@@ -4,6 +4,7 @@ import Navbar from './NavBar';
 import Aside from './Aside';
 import "../css/Layout.css";
 import { useEstetico } from '../providers/ProviderEstetico';
+import Footer from './Footer';
 
 export function Layout() {
     const { AsideOpen, setAsideOpen } = useEstetico();
@@ -61,6 +62,7 @@ export function Layout() {
             <div className="div-global">
                 <Outlet />
             </div>
+            <Footer />
         </div>
     );
 }
